@@ -1,4 +1,9 @@
+
+#ifndef INSTRUCTIONS_H
+#define  INSTRUCTIONS_H
+
 #include <stdint.h>
+
 
 
 typedef struct {
@@ -9,3 +14,7 @@ typedef struct {
     uint8_t NN;
     uint16_t NNN;
 } Instruction;
+
+
+
+#endif

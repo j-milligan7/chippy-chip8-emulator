@@ -1,5 +1,11 @@
+#ifndef CHIP8_H
+#define CHIP8_H
+
 #include <stdint.h>
+#include <stdbool.h>
 #include "instructions.h"
+
+
 typedef struct {
     uint8_t memory[4096]; //RAM
     uint8_t V[16]; // array of all general purpose registers [V0 -> VF]
@@ -22,3 +28,5 @@ uint16_t fetch(Chip8 *chip8);
 Instruction decode_instruction(uint16_t opcode);
 
 void execute_instruction(Chip8 *chip8, Instruction instr);
+
+#endif

@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "chip8.h"
+#include "instructions.c"
 
 static const uint8_t font_set[] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -54,8 +55,8 @@ Instruction decode_instruction(uint16_t opcode) {
 void execute_instruction(Chip8 *chip8, Instruction instr) {
     switch (instr.group) {
         case 0x0 :
-            switch(instr.X) {
-                //Rest of instructions
+            switch(instr.NNN) {
+                op_0NNN(chip8, instr.NNN);
             }
             break;
         case 0x1:
