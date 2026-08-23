@@ -5,7 +5,7 @@ static SDL_Window *window;
 static SDL_Renderer *renderer;
 
 int display_init(void) {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)) {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("SDL_Init failed: %s\n", SDL_GetError());
         return 0;
     }
