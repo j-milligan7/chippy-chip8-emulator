@@ -58,18 +58,12 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
             switch(instr.NNN) {
                 case 0x0E0 :
                     op_00E0(chip8);
+                    break;
             }
-            break;
-        case 0x1:
-            switch (instr.X) {
-
+            switch (instr.NN) {
+                case 0xEE :
+                    op_00EE(chip8);
+                    break;
             }
-            break;
-        case 0x2:
-            switch (instr.X) {
-
-            }
-            break;
-        // etc... will do later
     }
 }

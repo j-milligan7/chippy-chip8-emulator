@@ -127,5 +127,25 @@ void op_CXNN(Chip8 *chip8, uint8_t x ,uint8_t nn) {
 }
 
 void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
-    //need to do display :(
+    uint8_t x_coord = chip8->V[x] & 63;
+    uint8_t y_coord = chip8->V[y] & 31;
+    chip8->V[0xF] = 0;
+    for (int i = 0; i < n; i++) {
+        uint8_t sprite_byte = chip8->memory[chip8->I + i];
+        for (int j = 0; j < 8; j++) {
+            uint8_t sprite_pixel = (sprite_byte >> (7 - j)) & 1;
+            if (sprite_pixel) {
+                uint8_t pixel_x = x_coord & 63;
+                uint8_t pixel_y = y_coord & 31;
+                uint16_t index = pixel_y * 64 + (pixel_x + j);
+
+                if (chip8->display[index]) {
+                    chip8->V[0xF] = 1;
+                }
+                chip8->display[index] ^=1;
+            }
+
+        }
+        y_coord++;
+    }
 }
