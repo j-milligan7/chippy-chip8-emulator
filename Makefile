@@ -1,7 +1,8 @@
 CC = clang
-CFLAGS = -Wall -Wextra -g
+CFLAGS = -Wall -Wextra -std=c11
 
-TARGET = chip8
+SDL_CFLAGS = -I/opt/homebrew/include
+SDL_LIBS = -L/opt/homebrew/lib -lSDL2
 
 SRC = src/main.c \
       src/chip8.c \
@@ -10,14 +11,11 @@ SRC = src/main.c \
 
 OBJ = $(SRC:.c=.o)
 
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+chip8: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(SDL_LIBS) -o chip8
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(SDL_CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(TARGET)
-
-run: $(TARGET)
-	./$(TARGET)
+	rm -f $(OBJ) chip8
