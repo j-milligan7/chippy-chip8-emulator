@@ -1,11 +1,13 @@
 #include "chip8.h"
 #include "display.h"
 #include <stdio.h>
+#include <time.h>
 int main(int argc, char **argv){
     if (argc > 2) {
         fprintf(stderr, "Usage is %s <rom_path>\n", argv[0]);
         return 1;
     }
+    srand(time(NULL));
     Chip8 chip8;
     chip8_init(&chip8);
 
@@ -16,6 +18,7 @@ int main(int argc, char **argv){
     if (!display_init()) {
         return 1;
     }
+
 
     chip8_loop(&chip8);
     return 0;

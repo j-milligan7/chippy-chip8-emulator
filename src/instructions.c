@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 void op_0NNN(Chip8 *chip8, uint16_t nnn) {
     (void)chip8;
@@ -83,28 +84,18 @@ void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 
 void op_8XY5(Chip8 *chip8, uint8_t x, uint8_t y) {
-    if (chip8->V[x] > chip8->V[y]) {
-        chip8->V[0xF] = 1;
-    }
-    else {
-        chip8->V[0xF] = 0;
-    }
+    chip8->V[0xF] = (chip8->V[x] >= chip8->V[y]);
     chip8->V[x] = chip8->V[x] - chip8->V[y];
 }
 
 void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
-    if (chip8->V[y] > chip8->V[x]) {
-        chip8->V[0xF] = 1;
-    }
-    else {
-        chip8->V[0xF] = 0;
-    }
+    chip8->V[0xF] = (chip8->V[y] >= chip8->V[x]);
     chip8->V[x] = chip8->V[y] - chip8->V[x];
 }
 
 void op_8XY6(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] = chip8->V[y];
-    chip8->V[0xF] = chip8->V[x] & 0x01;
+    chip8->V[0xF] = chip8->V[x] & 0x1;
     chip8->V[x] >>= 1;
 
 }
@@ -153,13 +144,15 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
 }
 
 void op_EX9E(Chip8 *chip8, uint8_t x) {
-    if (chip8->keypad[chip8->V[x]]) {
-        chip8->PC += 2;
+    uint8_t key = chip8->V[x] & 0x0F;
+    if (chip8->keypad[key]) {
+       chip8->PC += 2;
     }
 }
 
 void op_EXA1(Chip8 *chip8, uint8_t x) {
-    if (!chip8->keypad[chip8->V[x]]) {
+    uint8_t key = chip8->V[x] & 0x0F;
+    if (!chip8->keypad[key]) {
         chip8->PC += 2;
     }
 }
@@ -181,13 +174,17 @@ void op_FX1E(Chip8 *chip8, uint8_t x) {
 }
 
 void op_FX0A(Chip8 *chip8, uint8_t x) {
+    bool key_pressed = false;
     for (int i = 0; i < 16; i++) {
         if (chip8->keypad[i]) {
             chip8->V[x] = i;
-            return;
+            key_pressed = true;
+            break;
         }
     }
-    chip8->PC -= 2;
+    if (!key_pressed) {
+        chip8->PC -=2;
+    }
 }
 
 void op_FX29(Chip8 *chip8, uint8_t x) {

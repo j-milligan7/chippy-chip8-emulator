@@ -7,8 +7,9 @@
 #include "display.h"
 #include "instructions.h"
 #include "instructions.h"
+#include <time.h>
 
-#define INSTRUCTIONS_PER_FRAME 11
+#define INSTRUCTIONS_PER_FRAME 20
 
 static const uint8_t font_set[] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -57,6 +58,7 @@ Instruction decode_instruction(uint16_t opcode) {
 }
 
 void execute_instruction(Chip8 *chip8, Instruction instr) {
+   // printf("Group=%X X=%X Y=%X N=%X NN=%X NNN=%x\n", instr.group, instr.X, instr.Y, instr.N, instr.NN, instr.NNN);
     switch (instr.group) {
         case 0x0 :
             switch(instr.NNN) {
@@ -206,17 +208,27 @@ int chip8_load_rom(Chip8 *chip8, const char *path) {
 
 void chip8_loop(Chip8 *chip8) {
     int running = 1;
+    const int TARGET_FRAME_MS = 1000 / 60;
     while (running) {
+        Uint32 frame_start = SDL_GetTicks();
         display_handle_events(chip8, &running);
 
         for (int i = 0; i < INSTRUCTIONS_PER_FRAME; i++) {
             uint16_t opcode = fetch(chip8);
+           //printf("PC=%03X OPCODE=%04X DT=%d\n", old_pc, opcode, chip8->delay_timer);
             Instruction instr = decode_instruction(opcode);
             execute_instruction(chip8, instr);
         }
+
         if (chip8->delay_timer > 0) {chip8->delay_timer--;}
         if (chip8->sound_timer > 0) {chip8->sound_timer--;}
 
         display_update(chip8);
+
+
+        Uint32 elapsed = SDL_GetTicks() - frame_start;
+        if (elapsed < TARGET_FRAME_MS) {
+            SDL_Delay(TARGET_FRAME_MS - elapsed);
     }
+}
 }

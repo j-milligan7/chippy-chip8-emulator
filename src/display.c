@@ -69,6 +69,7 @@ void display_handle_events(Chip8 *chip8, int *running) {
         }
 
         if (event.type == SDL_KEYDOWN) {
+            printf("SDL KeyDown detected: scancode=%d\n", event.key.keysym.sym);
 
             switch (event.key.keysym.sym) {
 
@@ -94,6 +95,7 @@ void display_handle_events(Chip8 *chip8, int *running) {
 
                 case SDLK_w:
                     chip8->keypad[0x5] = 1;
+                    //printf("keydown: W -> keypad[5]=1\n");
                     break;
 
                 case SDLK_e:
