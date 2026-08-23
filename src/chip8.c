@@ -50,3 +50,24 @@ Instruction decode_instruction(uint16_t opcode) {
     instr.NNN = opcode & 0x0FFF;
     return instr;
 }
+
+void execute_instruction(Chip8 *chip8, Instruction instr) {
+    switch (instr.group) {
+        case 0x0 :
+            switch(instr.X) {
+                //Rest of instructions
+            }
+            break;
+        case 0x1:
+            switch (instr.X) {
+
+            }
+            break;
+        case 0x2:
+            switch (instr.X) {
+
+            }
+            break;
+        // etc... will do later
+    }
+}
