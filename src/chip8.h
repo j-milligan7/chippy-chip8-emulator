@@ -30,4 +30,6 @@ Instruction decode_instruction(uint16_t opcode);
 
 void execute_instruction(Chip8 *chip8, Instruction instr);
 
+int chip8_load_rom(Chip8 *chip8, const char *path);
+
 #endif

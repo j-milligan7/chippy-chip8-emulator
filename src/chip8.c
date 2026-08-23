@@ -4,7 +4,11 @@
 #include <string.h>
 #include <stdbool.h>
 #include "chip8.h"
+#include "display.h"
 #include "instructions.h"
+#include "instructions.h"
+
+#define INSTRUCTIONS_PER_FRAME 11
 
 static const uint8_t font_set[] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -177,3 +181,42 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
         }
 
     }
+
+
+int chip8_load_rom(Chip8 *chip8, const char *path) {
+    FILE *rom = fopen(path, "rb");
+    if (!rom) {
+        perror("fopen");
+        return 0;
+    }
+    fseek(rom, 0, SEEK_END);
+    long size = ftell(rom);
+    rewind(rom);
+
+    if (size < 0 || size > (long)(sizeof(chip8->memory) - 0x200)) {
+        fprintf(stderr, "ERROR: ROM TOO LARGE TO FIT IN MEMORY\n");
+        fclose(rom);
+        return 0;
+    }
+
+    fread(&chip8->memory[0x200], 1, (size_t)size, rom);
+    fclose(rom);
+    return 1;
+}
+
+void chip8_loop(Chip8 *chip8) {
+    int running = 1;
+    while (running) {
+        display_handle_events(chip8, &running);
+
+        for (int i = 0; i < INSTRUCTIONS_PER_FRAME; i++) {
+            uint16_t opcode = fetch(chip8);
+            Instruction instr = decode_instruction(opcode);
+            execute_instruction(chip8, instr);
+        }
+        if (chip8->delay_timer > 0) {chip8->delay_timer--;}
+        if (chip8->sound_timer > 0) {chip8->sound_timer--;}
+
+        display_update(chip8);
+    }
+}
