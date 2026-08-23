@@ -5,7 +5,8 @@
 #include <string.h>
 
 void op_0NNN(Chip8 *chip8, uint16_t nnn) {
-    return;
+    (void)chip8;
+    (void)nnn;
 }
 
 void op_00E0(Chip8 *chip8) {

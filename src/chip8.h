@@ -5,8 +5,9 @@
 #include <stdbool.h>
 #include "instructions.h"
 
+typedef struct Chip8 Chip8;
 
-typedef struct {
+ struct Chip8 {
     uint8_t memory[4096]; //RAM
     uint8_t V[16]; // array of all general purpose registers [V0 -> VF]
     uint16_t I; // INDEX REGISTER
@@ -17,7 +18,7 @@ typedef struct {
     uint8_t sound_timer;
     uint8_t display[64 * 32]; //DISPLAY
     bool keypad[16];
-} Chip8;
+};
 
 void chip8_init(Chip8 *chip8);
 

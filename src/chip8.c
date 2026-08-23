@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "chip8.h"
-#include "instructions.c"
+#include "instructions.h"
 
 static const uint8_t font_set[] = {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -65,5 +65,115 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
                     op_00EE(chip8);
                     break;
             }
+            break;
+        case 0x1 :
+            op_1NNN(chip8, instr.NNN);
+            break;
+        case 0x2:
+            op_2NNN(chip8, instr.NNN);
+            break;
+        case 0x3:
+            op_3XNN(chip8, instr.X, instr.NN);
+            break;
+        case 0x4:
+            op_4XNN(chip8, instr.X, instr.NN);
+            break;
+        case 0x5:
+            op_5XY0(chip8, instr.X, instr.Y);
+            break;
+        case 0x6:
+            op_6XNN(chip8, instr.X, instr.NN);
+            break;
+        case 0x9:
+            op_9XY0(chip8, instr.X, instr.Y);
+            break;
+        case 0x7:
+            op_7XNN(chip8, instr.X, instr.NN);
+            break;
+        case 0x8:
+            switch (instr.N) {
+                case 0x0 :
+                    op_8XY0(chip8, instr.X, instr.Y);
+                    break;
+                case 0x1:
+                    op_8XY1(chip8, instr.X, instr.Y);
+                    break;
+                case 0x2:
+                    op_8XY2(chip8, instr.X, instr.Y);
+                    break;
+                case 0x3:
+                    op_8XY3(chip8, instr.X, instr.Y);
+                    break;
+                case 0x4:
+                    op_8XY4(chip8, instr.X, instr.Y);
+                    break;
+                case 0x5:
+                    op_8XY5(chip8, instr.X, instr.Y);
+                    break;
+                case 0x6:
+                    op_8XY6(chip8, instr.X, instr.Y);
+                    break;
+                case 0x7:
+                    op_8XY7(chip8, instr.X, instr.Y);
+                    break;
+                case 0xE:
+                    op_8XYE(chip8, instr.X, instr.Y);
+                    break;
+            }
+            break;
+        case 0xA:
+            op_ANNN(chip8, instr.NNN);
+            break;
+        case 0xB:
+            op_BNNN(chip8, instr.NNN);
+            break;
+        case 0xC:
+            op_CXNN(chip8, instr.X, instr.NN);
+            break;
+        case 0xD:
+            op_DXYN(chip8, instr.X, instr.Y, instr.N);
+            break;
+        case 0xE:
+            switch(instr.NN) {
+                case 0x9E:
+                    op_EX9E(chip8, instr.X);
+                    break;
+                case 0xA1:
+                    op_EXA1(chip8, instr.X);
+                    break;
+            }
+            break;
+        case 0xF:
+            switch(instr.NN) {
+                case 0x07:
+                    op_FX07(chip8, instr.X);
+                    break;
+                case 0x15:
+                    op_FX15(chip8, instr.X);
+                    break;
+                case 0x18:
+                    op_FX18(chip8, instr.X);
+                    break;
+                case 0x1E:
+                    op_FX1E(chip8, instr.X);
+                    break;
+                case 0x0A:
+                    op_FX0A(chip8, instr.X);
+                    break;
+                case 0x29:
+                    op_FX29(chip8, instr.X);
+                    break;
+                case 0x33:
+                    op_FX33(chip8, instr.X);
+                    break;
+                case 0x55:
+                    op_FX55(chip8, instr.X);
+                    break;
+                case 0x65:
+                    op_FX65(chip8, instr.X);
+                    break;
+            }
+            break;
+        }
+
     }
-}
