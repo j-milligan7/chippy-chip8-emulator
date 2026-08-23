@@ -2,13 +2,14 @@
 #include "chip8.h"
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 void op_0NNN(Chip8 *chip8, uint16_t nnn) {
     return;
 }
 
 void op_00E0(Chip8 *chip8) {
-    //clear screen
+    memset(chip8->display, 0, sizeof(chip8->display));
 }
 
 void op_00EE(Chip8 *chip8) {
@@ -135,9 +136,9 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
         for (int j = 0; j < 8; j++) {
             uint8_t sprite_pixel = (sprite_byte >> (7 - j)) & 1;
             if (sprite_pixel) {
-                uint8_t pixel_x = x_coord & 63;
+                uint8_t pixel_x = (x_coord + j) & 63;
                 uint8_t pixel_y = y_coord & 31;
-                uint16_t index = pixel_y * 64 + (pixel_x + j);
+                uint16_t index = pixel_y * 64 + pixel_x;
 
                 if (chip8->display[index]) {
                     chip8->V[0xF] = 1;
@@ -146,6 +147,73 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
             }
 
         }
-        y_coord++;
+        y_coord = (y_coord + 1) & 31;
+    }
+}
+
+void op_EX9E(Chip8 *chip8, uint8_t x) {
+    if (chip8->keypad[chip8->V[x]]) {
+        chip8->PC += 2;
+    }
+}
+
+void op_EXA1(Chip8 *chip8, uint8_t x) {
+    if (!chip8->keypad[chip8->V[x]]) {
+        chip8->PC += 2;
+    }
+}
+
+void op_FX07(Chip8 *chip8, uint8_t x) {
+    chip8->V[x] = chip8->delay_timer;
+}
+
+void op_FX15(Chip8 *chip8, uint8_t x) {
+    chip8->delay_timer = chip8->V[x];
+}
+
+void op_FX18(Chip8 *chip8, uint8_t x) {
+    chip8->sound_timer = chip8->V[x];
+}
+
+void op_FX1E(Chip8 *chip8, uint8_t x) {
+    chip8->I += chip8->V[x];
+}
+
+void op_FX0A(Chip8 *chip8, uint8_t x) {
+    for (int i = 0; i < 16; i++) {
+        if (chip8->keypad[i]) {
+            chip8->V[x] = i;
+            return;
+        }
+    }
+    chip8->PC -= 2;
+}
+
+void op_FX29(Chip8 *chip8, uint8_t x) {
+    chip8->I = 0x50 + (chip8->V[x] * 5);
+}
+
+void op_FX33(Chip8 *chip8, uint8_t x) {
+    uint8_t value = chip8->V[x];
+    uint8_t arr[3];
+    for (int i = 2; i >= 0; i--) {
+        arr[i] = value % 10;
+        value /= 10;
+    }
+    for (int i = 0; i < 3; i++) {
+        chip8->memory[chip8->I + i] = arr[i];
+    }
+
+}
+
+void op_FX55(Chip8 *chip8, uint8_t x) {
+    for (int i = 0; i <= x; i++) {
+        chip8->memory[chip8->I+i] = chip8->V[i];
+    }
+}
+
+void op_FX65(Chip8 *chip8, uint8_t x) {
+    for (int i = 0; i <= x; i++) {
+        chip8->V[i] = chip8->memory[chip8->I+i];
     }
 }
