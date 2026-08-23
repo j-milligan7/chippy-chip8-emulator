@@ -7,17 +7,17 @@ void op_0NNN(Chip8 *chip8, uint16_t nnn) {
     return;
 }
 
-void op_00E0(Chip8 *chip8, uint8_t y) {
+void op_00E0(Chip8 *chip8) {
     //clear screen
 }
 
-void op_00EE(Chip8 *chip8, uint8_t nn) {
+void op_00EE(Chip8 *chip8) {
     chip8->SP--;
     chip8->PC = chip8->stack[chip8->SP];
 }
 
 void op_2NNN(Chip8 *chip8, uint16_t nnn) {
-    chip8->stack[chip8->SP] = chip8->PC+1;
+    chip8->stack[chip8->SP] = chip8->PC;
     chip8->SP++;
     chip8->PC = nnn;
 }
@@ -63,19 +63,21 @@ void op_8XY0(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 
 void op_8XY1(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] |= (chip8->V[x] & chip8->V[y]);
+    chip8->V[x] |= chip8->V[y];
 }
 
 void op_8XY2(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] &= (chip8->V[x] & chip8->V[y]);
+    chip8->V[x] &= chip8->V[y];
 }
 
 void op_8XY3(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] ^= (chip8->V[x] & chip8->V[y]);
+    chip8->V[x] ^= chip8->V[y];
 }
 
 void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] += (chip8->V[x] + chip8->V[y]);
+    uint16_t sum = chip8->V[x] + chip8->V[y];
+    chip8->V[0x0F] = sum > 255;
+    chip8->V[x] = sum & 0xFF;
 }
 
 void op_8XY5(Chip8 *chip8, uint8_t x, uint8_t y) {
@@ -85,7 +87,7 @@ void op_8XY5(Chip8 *chip8, uint8_t x, uint8_t y) {
     else {
         chip8->V[0xF] = 0;
     }
-    chip8->V[x] = (chip8->V[x] - chip8->V[y]);
+    chip8->V[x] = chip8->V[x] - chip8->V[y];
 }
 
 void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
@@ -95,7 +97,7 @@ void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
     else {
         chip8->V[0xF] = 0;
     }
-    chip8->V[x] = (chip8->V[y] - chip8->V[x]);
+    chip8->V[x] = chip8->V[y] - chip8->V[x];
 }
 
 void op_8XY6(Chip8 *chip8, uint8_t x, uint8_t y) {
@@ -107,7 +109,7 @@ void op_8XY6(Chip8 *chip8, uint8_t x, uint8_t y) {
 
 void op_8XYE(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] = chip8->V[y];
-    chip8->V[0xF] = (chip8->V[x] & 0x80 >> 7);
+    chip8->V[0xF] = (chip8->V[x] & 0x80) >> 7;
     chip8->V[x] <<= 1;
 }
 
@@ -121,7 +123,7 @@ void op_BNNN(Chip8 *chip8, uint16_t nnn) {
 
 void op_CXNN(Chip8 *chip8, uint8_t x ,uint8_t nn) {
     uint8_t random = rand();
-    chip8->V[x] = (nn & random);
+    chip8->V[x] = (nn & (uint8_t)random);
 }
 
 void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {

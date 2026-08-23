@@ -56,7 +56,8 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
     switch (instr.group) {
         case 0x0 :
             switch(instr.NNN) {
-                op_0NNN(chip8, instr.NNN);
+                case 0x0E0 :
+                    op_00E0(chip8);
             }
             break;
         case 0x1:
