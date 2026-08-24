@@ -12,6 +12,7 @@ Implemented all of the original chip-8 instruction set. (Will add more documenta
 
 ## Controls
 The controls depend on the rom you use, but the supported keymap is:
+
 123C - 1234
 
 456D - QWER
