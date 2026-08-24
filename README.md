@@ -76,6 +76,8 @@ Debug Mode/Menu
 
 Testing
 
+fix display issues
+
 
 ## References
 where i got some ROMs to test
