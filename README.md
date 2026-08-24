@@ -12,13 +12,18 @@ Implemented all of the original chip-8 instruction set. (Will add more documenta
 
 ## Controls
 The controls depend on the rom you use, but the supported keymap is:
-123C - 1234 /
-456D - QWER /
-789E - ASDF /
-A0BF - ZXCV /
+123C - 1234
+
+456D - QWER
+
+789E - ASDF
+
+A0BF - ZXCV
+
 
 ## Building
-You need to have SDL2 installed and pkg-config \
+You need to have SDL2 installed and pkg-config  
+
 ```bash
 git clone https://github.com/j-milligan7/chippy-chip8-emulator.git
 cd chippy-chip8-emulator
@@ -31,8 +36,7 @@ After building:
 ./chip8 roms/yourRom/ch8
 ```
 A good place to get ROMs:
-[chip8 archive](https://johnearnest.github.io/chip8Archive/?sort=platform)
-
+[chip8 archive](https://johnearnest.github.io/chip8Archive/?sort=platform)  
 
 ## Architecture
 will expand on this later
@@ -62,17 +66,25 @@ will expand on this later
 
 
 ## Testing
-See Future Improvelents
+See Future Improvements
 
 ## Future Improvements (TODO)
-Docs /
-Debug Mode/Menu /
-Testing /
+Docs 
+
+Debug Mode/Menu
+
+Testing
+
 
 ## References
-where i got some ROMs to test /
-[chip8Archive](https://johnearnest.github.io/chip8Archive/?sort=platform) /
-First test ROM /
-[chip8-test-rom](https://github.com/corax89/chip8-test-rom) /
-The guide i followed /
-[write-a-chip-8-emulator](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/) /
+where i got some ROMs to test
+
+[chip8Archive](https://johnearnest.github.io/chip8Archive/?sort=platform)
+
+First test ROM 
+
+[chip8-test-rom](https://github.com/corax89/chip8-test-rom)
+
+The guide i followed
+
+[write-a-chip-8-emulator](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/)
