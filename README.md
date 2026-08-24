@@ -34,7 +34,7 @@ make
 ## Running
 After building:
 ```bash
-./chip8 roms/yourRom/ch8
+./chip8 roms/yourRom.ch8
 ```
 A good place to get ROMs:
 [chip8 archive](https://johnearnest.github.io/chip8Archive/?sort=platform)  
