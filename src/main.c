@@ -21,5 +21,6 @@ int main(int argc, char **argv){
 
 
     chip8_loop(&chip8);
+    display_cleanup();
     return 0;
 }

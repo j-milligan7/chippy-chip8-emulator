@@ -88,7 +88,7 @@ Debug Mode/Menu
 
 Testing
 
-fix display issues
+fix display issues / rewrite display fully
 
 
 ## References
@@ -103,3 +103,6 @@ First test ROM
 The guide i followed
 
 [write-a-chip-8-emulator](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/)
+
+##Ai disclaimer
+The display code is Ai generated, i understand this is not a good practice to have and i will be rewriting it later.
