@@ -3,7 +3,7 @@
 A chip-8 emulator that is written in C that uses SDL2 for both graphics and keyboard input.
 
 
-![example](assets/running.gif)
+![running gif](assets/dino.gif)
 
 ## Features
 
