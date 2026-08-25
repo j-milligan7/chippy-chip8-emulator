@@ -34,7 +34,6 @@ void chip8_init(Chip8 *chip8) {
     memset(chip8, 0, sizeof(Chip8));
     chip8->PC = 0x200;
     memcpy(&chip8->memory[0x050], font_set, sizeof(font_set));
-    //incomplete
 
 }
 
