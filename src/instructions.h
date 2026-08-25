@@ -48,7 +48,7 @@ void op_8XYE(Chip8 *chip8, uint8_t x);
 /* 0x9 - 0xD instructions */
 void op_9XY0(Chip8 *chip8, uint8_t x, uint8_t y);
 void op_ANNN(Chip8 *chip8, uint16_t nnn);
-void op_BNNN(Chip8 *chip8, uint16_t nnn);
+void op_BXNN(Chip8 *chip8, uint16_t nnn, uint8_t x);
 void op_CXNN(Chip8 *chip8, uint8_t x, uint8_t nn);
 void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n);
 

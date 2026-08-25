@@ -107,8 +107,8 @@ void op_ANNN(Chip8 *chip8, uint16_t nnn) {
     chip8->I = nnn;
 }
 
-void op_BNNN(Chip8 *chip8, uint16_t nnn) {
-    chip8->PC = nnn + chip8->V[0];
+void op_BXNN(Chip8 *chip8, uint16_t nnn, uint8_t x) {
+    chip8->PC = nnn + chip8->V[x];
 }
 
 void op_CXNN(Chip8 *chip8, uint8_t x ,uint8_t nn) {

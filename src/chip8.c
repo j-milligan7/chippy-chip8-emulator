@@ -131,7 +131,7 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
             op_ANNN(chip8, instr.NNN);
             break;
         case 0xB:
-            op_BNNN(chip8, instr.NNN);
+            op_BNNN(chip8, instr.NNN, instr.X);
             break;
         case 0xC:
             op_CXNN(chip8, instr.X, instr.NN);

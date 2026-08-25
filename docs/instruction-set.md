@@ -182,12 +182,12 @@ void op_ANNN(Chip8 *chip8, uint16_t nnn) {
 }
 ```
 
-## BNNN
-This jumps the program counter to the address NNN + V0.
+## BXNN
+This jumps the program counter to the address NNN + VX.
 
 ```C
-void op_BNNN(Chip8 *chip8, uint16_t nnn) {
-    chip8->PC = nnn + chip8->V[0];
+void op_BXNN(Chip8 *chip8, uint16_t nnn, uint8_t x) {
+    chip8->PC = nnn + chip8->V[x];
 }
 ```
 
