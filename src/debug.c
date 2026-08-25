@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "chip8.h"
 
 void debugger_init(Debugger *dbg) {
     dbg->num_breakpoints = 0;
@@ -76,18 +77,30 @@ void debugger_repl(Debugger *dbg, Chip8 *chip8) {
             return;
         }
         else if(line[0] == 'b') {
-            sscanf(line, "b %x", &addr);
-            debugger_add_breakpoint(dbg, addr);
+            if(sscanf(line, "b %x", &addr) == 1) {
+                debugger_add_breakpoint(dbg, addr);
+            }
+            else {
+                printf("usage: b <hex_addr>\n");
+            }
         }
         else if (line[0] == 'd') {
-            sscanf(line, "d %x", &addr);
-            debugger_remove_breakpoint(dbg, addr);
+            if(sscanf(line, "d %x", &addr) == 1) {
+                debugger_remove_breakpoint(dbg, addr);
+            }
+            else {
+                printf("usage: d <hex_addr>\n");
+            }
+
         }
         else if (line[0] == 'l') {
-            for (int i = 0; i < dbg->num_breakpoints-1; i++) {
+            for (int i = 0; i < dbg->num_breakpoints; i++) {
                 printf("0x%4X ", dbg->breakpoints[i]);
             }
             printf("\n");
+        }
+        else if (line[0] == 'r') {
+            debugger_print_state(chip8);
         }
         else if (line[0] == 'q') {
             exit(0);

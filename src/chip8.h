@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "instructions.h"
+#include "debug.h"
 
 typedef struct Chip8 Chip8;
 
@@ -22,7 +23,7 @@ typedef struct Chip8 Chip8;
 
 void chip8_init(Chip8 *chip8);
 
-void chip8_loop(Chip8 *chip8);
+void chip8_loop(Chip8 *chip8, Debugger *dbg);
 
 uint16_t fetch(Chip8 *chip8);
 

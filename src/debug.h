@@ -1,7 +1,12 @@
-
-#include "chip8.h"
+#ifndef DEBUG_H
+#define DEBUG_H
+//#include "chip8.h"
 #include <stdbool.h>
+#include <stdint.h>
 #define MAX_BREAKPOINTS 16
+
+typedef struct Chip8 Chip8;
+
 
 typedef struct {
     uint16_t breakpoints[MAX_BREAKPOINTS];
@@ -15,3 +20,5 @@ bool debugger_has_breakpoint(Debugger *dbg, uint16_t addr);
 void debugger_add_breakpoint(Debugger *dbg, uint16_t addr);
 void debugger_remove_breakpoint(Debugger *dbg, uint16_t addr);
 void debugger_repl(Debugger *dbg, Chip8 *chip8);
+
+#endif

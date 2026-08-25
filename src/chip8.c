@@ -8,6 +8,7 @@
 #include "instructions.h"
 #include "instructions.h"
 #include <time.h>
+#include "debug.h"
 
 #define INSTRUCTIONS_PER_FRAME 20
 
@@ -205,7 +206,7 @@ int chip8_load_rom(Chip8 *chip8, const char *path) {
     return 1;
 }
 
-void chip8_loop(Chip8 *chip8) {
+void chip8_loop(Chip8 *chip8, Debugger *dbg) {
     int running = 1;
     const int TARGET_FRAME_MS = 1000 / 60;
     while (running) {
@@ -213,6 +214,10 @@ void chip8_loop(Chip8 *chip8) {
         display_handle_events(chip8, &running);
 
         for (int i = 0; i < INSTRUCTIONS_PER_FRAME; i++) {
+            if (dbg->step_mode || debugger_has_breakpoint(dbg, chip8->PC)) {
+                debugger_print_state(chip8);
+                debugger_repl(dbg, chip8);
+            }
             uint16_t opcode = fetch(chip8);
            //printf("PC=%03X OPCODE=%04X DT=%d\n", old_pc, opcode, chip8->delay_timer);
             Instruction instr = decode_instruction(opcode);
@@ -228,6 +233,6 @@ void chip8_loop(Chip8 *chip8) {
         Uint32 elapsed = SDL_GetTicks() - frame_start;
         if (elapsed < TARGET_FRAME_MS) {
             SDL_Delay(TARGET_FRAME_MS - elapsed);
+        }
     }
-}
 }
