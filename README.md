@@ -52,7 +52,7 @@ A good place to get ROMs:
 [chip8 archive](https://johnearnest.github.io/chip8Archive/?sort=platform)  
 
 ## Architecture
-will expand on this later
+See [Architecture](docs/architecture.md)
 
 ## Project Structure
 ```text
