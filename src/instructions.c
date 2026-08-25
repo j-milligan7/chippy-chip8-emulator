@@ -5,10 +5,6 @@
 #include <string.h>
 #include <stdio.h>
 
-void op_0NNN(Chip8 *chip8, uint16_t nnn) {
-    (void)chip8;
-    (void)nnn;
-}
 
 void op_00E0(Chip8 *chip8) {
     memset(chip8->display, 0, sizeof(chip8->display));
@@ -201,7 +197,6 @@ void op_FX33(Chip8 *chip8, uint8_t x) {
     for (int i = 0; i < 3; i++) {
         chip8->memory[chip8->I + i] = arr[i];
     }
-
 }
 
 void op_FX55(Chip8 *chip8, uint8_t x) {
