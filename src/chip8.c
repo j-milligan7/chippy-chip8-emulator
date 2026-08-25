@@ -117,13 +117,13 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
                     op_8XY5(chip8, instr.X, instr.Y);
                     break;
                 case 0x6:
-                    op_8XY6(chip8, instr.X, instr.Y);
+                    op_8XY6(chip8, instr.X);
                     break;
                 case 0x7:
                     op_8XY7(chip8, instr.X, instr.Y);
                     break;
                 case 0xE:
-                    op_8XYE(chip8, instr.X, instr.Y);
+                    op_8XYE(chip8, instr.X);
                     break;
             }
             break;

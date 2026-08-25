@@ -63,14 +63,17 @@ void op_8XY0(Chip8 *chip8, uint8_t x, uint8_t y) {
 
 void op_8XY1(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] |= chip8->V[y];
+    chip8->V[0xF] = 0;
 }
 
 void op_8XY2(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] &= chip8->V[y];
+    chip8->V[0xF] = 0;
 }
 
 void op_8XY3(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] ^= chip8->V[y];
+    chip8->V[0xF] = 0;
 }
 
 void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
@@ -89,15 +92,13 @@ void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
     chip8->V[x] = chip8->V[y] - chip8->V[x];
 }
 
-void op_8XY6(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] = chip8->V[y];
+void op_8XY6(Chip8 *chip8, uint8_t x) {
     chip8->V[0xF] = chip8->V[x] & 0x1;
     chip8->V[x] >>= 1;
 
 }
 
-void op_8XYE(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[x] = chip8->V[y];
+void op_8XYE(Chip8 *chip8, uint8_t x) {
     chip8->V[0xF] = (chip8->V[x] & 0x80) >> 7;
     chip8->V[x] <<= 1;
 }
@@ -122,20 +123,20 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
     for (int i = 0; i < n; i++) {
         uint8_t sprite_byte = chip8->memory[chip8->I + i];
         for (int j = 0; j < 8; j++) {
-            uint8_t sprite_pixel = (sprite_byte >> (7 - j)) & 1;
-            if (sprite_pixel) {
-                uint8_t pixel_x = (x_coord + j) & 63;
-                uint8_t pixel_y = y_coord & 31;
-                uint16_t index = pixel_y * 64 + pixel_x;
-
-                if (chip8->display[index]) {
-                    chip8->V[0xF] = 1;
-                }
-                chip8->display[index] ^=1;
+            if (!(sprite_byte & (0x80 >> j))) {
+                continue;
             }
-
+            uint8_t pixel_x = x_coord + j;
+            uint8_t pixel_y = y_coord + i;
+            if (pixel_x >= 64 || pixel_y >= 32) {
+                continue;
+            }
+            uint16_t index = pixel_y * 64 + pixel_x;
+            if (chip8->display[index]) {
+                chip8->V[0xF] = 1;
+            }
+            chip8->display[index] ^= 1;
         }
-        y_coord = (y_coord + 1) & 31;
     }
 }
 
@@ -203,10 +204,12 @@ void op_FX55(Chip8 *chip8, uint8_t x) {
     for (int i = 0; i <= x; i++) {
         chip8->memory[chip8->I+i] = chip8->V[i];
     }
+    chip8->I += x + 1;
 }
 
 void op_FX65(Chip8 *chip8, uint8_t x) {
     for (int i = 0; i <= x; i++) {
         chip8->V[i] = chip8->memory[chip8->I+i];
     }
+    chip8->I += x + 1;
 }
