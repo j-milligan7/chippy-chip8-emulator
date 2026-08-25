@@ -1,9 +1,7 @@
 # Brief Description of all instructions
 
 
-# The "basic" ones
-
-##00E0
+## 00E0
 The clear screen instruction. This works by setting all pixels to 0.
 
 ```C
@@ -12,7 +10,7 @@ void op_00E0(Chip8 *chip8) {
 }
 ```
 
-##00EE
+## 00EE
 This is a return instruction, it pops the last memory location in the stack and assings the program counter to it.
 
 ```C
@@ -22,7 +20,7 @@ void op_00EE(Chip8 *chip8) {
 }
 ```
 
-##1NNN
+## 1NNN
 The Jump instruction. This sets the program counter to NNN.
 
 ```C
@@ -31,7 +29,7 @@ void op_1NNN(Chip8 *chip8, uint16_t nnn) {
 }
 ```
 
-##2NNN
+## 2NNN
 This is a call instruction, pushes the program counter to the stack, and sets the program counuter to NNN.
 
 ```C
@@ -42,7 +40,7 @@ void op_2NNN(Chip8 *chip8, uint16_t nnn) {
 }
 ```
 
-##3XNN & 4XNN
+## 3XNN & 4XNN
 When these instructions are called, they checks whether register VX == NN, 3XNN skips one instruction if they are equal, 4XNN skips if they are not.
 
 ```C
@@ -59,7 +57,7 @@ void op_4XNN(Chip8 *chip8, uint8_t x, uint8_t nn) {
 }
 ```
 
-##5XY0 & 9XY0
+## 5XY0 & 9XY0
 These instructions check whether registers VX == VY, 5XY0 skips if they are equal, 9XY0 skips if they are not.
 
 ```C
@@ -76,7 +74,7 @@ void op_9XY0(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##6XNN
+## 6XNN
 This instructions sets the register VX to the value NN.
 
 ```C
@@ -85,7 +83,7 @@ void op_6XNN(Chip8 *chip8, uint8_t x, uint8_t nn) {
 }
 ```
 
-##7XNN
+## 7XNN
 This instruction adds the value NN to the register VX.
 
 ```C
@@ -94,7 +92,7 @@ void op_7XNN(Chip8 *chip8, uint8_t x, uint8_t nn) {
 }
 ```
 
-##8XY0
+## 8XY0
 This sets the register VX to VY.
 
 ```C
@@ -103,7 +101,7 @@ void op_8XY0(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY1
+## 8XY1
 This sets the register VX to the bitwise OR of VX and VY.
 
 ```C
@@ -112,7 +110,7 @@ void op_8XY1(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY2
+## 8XY2
 This sets the register VX the the bitwise AND of VX and VY.
 
 ```C
@@ -121,7 +119,7 @@ void op_8XY2(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY3
+## 8XY3
 This sets the register VX to the bitwise XOR of VX and VY
 
 ```C
@@ -130,7 +128,7 @@ void op_8XY3(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY4
+## 8XY4
 This sets the register VX to VX + VY. This instruction also affects the carry flag in the case of an overflow.
 
 ```C
@@ -141,7 +139,7 @@ void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY5 & 8XY7
+## 8XY5 & 8XY7
 These instructions subtract one register from another. 8XY5 sets VX to VX-VY, while 8XY7 sets VX to VY-VX. These subtractions also affect the carry flag, but this time in the case of an underflow.
 
 ```C
@@ -156,7 +154,7 @@ void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##8XY6 & 8XYE
+## 8XY6 & 8XYE
 These instructions set the register VX to VY, then shift that value by 1, 8XY6 shifts it to the right, 8XYE shifts to the left. VF then gets set to either 0 or 1 dependinf on which bit got pushed out.
 
 ```C
@@ -174,7 +172,7 @@ void op_8XYE(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 ```
 
-##ANNN
+## ANNN
 This sets the index register to the value NNN.
 
 ```C
@@ -183,7 +181,7 @@ void op_ANNN(Chip8 *chip8, uint16_t nnn) {
 }
 ```
 
-##BNNN
+## BNNN
 This jumps the program counter to the address NNN + V0.
 
 ```C
@@ -192,7 +190,7 @@ void op_BNNN(Chip8 *chip8, uint16_t nnn) {
 }
 ```
 
-##CXNN
+## CXNN
 This instruction generates a random number, then ANDs it with the value NN and sets the register VX to that value.
 
 ```C
@@ -202,7 +200,7 @@ void op_CXNN(Chip8 *chip8, uint8_t x ,uint8_t nn) {
 }
 ```
 
-##DXYN
+## DXYN
 This is the "draw" instruction, it draws an N pixels tall sprite from the memory location at the index register. at the x coordinate held in VX and the y coordinate held in VY. All of the pixels that are on in the sprite will flip the pixels on the screen that it is drawn to. If any pixels are turned off, the VF register gets set to 1.
 
 ```C
@@ -233,7 +231,7 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
 
 note: this was the hardest function by a mile.
 
-##EX9E & EXA1
+## EX9E & EXA1
 These instructions are based on keyboard input, EX9E will skip an instruction if a key is pressed, EXA1 will skip if no key is pressed.
 
 ```C
@@ -252,7 +250,7 @@ void op_EXA1(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX07, FX15 & FX18
+## FX07, FX15 & FX18
 These are the timer instructions. FX07 sets VX to the current value of the delay timer. FX15 does the opposite, it sets the delay timer to the value in VX. FX18 sets the sound timer to the value in VX.
 
 ```C
@@ -269,7 +267,7 @@ void op_FX18(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX1E
+## FX1E
 The index register gets the value in VX added onto it.
 
 ```C
@@ -278,7 +276,7 @@ void op_FX1E(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX0A
+## FX0A
 This instruction stops executing instructions until a key has been pressed.
 
 ```C
@@ -297,7 +295,7 @@ void op_FX0A(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX29
+## FX29
 This instruction sets the index register to the address of a hexadecimal character in VX (The font character).
 
 ```C
@@ -306,7 +304,7 @@ void op_FX29(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX33
+## FX33
 This instruction takes the number in VX and converts it to 3 individual digits, then stores these three numbers at the address in the index register.
 
 ```C
@@ -323,7 +321,7 @@ void op_FX33(Chip8 *chip8, uint8_t x) {
 }
 ```
 
-##FX55 & FX65
+## FX55 & FX65
 FX55 stores the values from V0 to VX in successive memory addresses. starting with the one at the index register. While FX65 does the opposite, it stores the values at the memory address at the index register to the index register + X and stores them into the variable registers.
 
 ```C
