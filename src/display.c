@@ -1,8 +1,21 @@
 #include "display.h"
 #include "chip8.h"
+#include <stdint.h>
+
+#define DISPLAY_WIDTH 64
+#define DISPLAY_HEIGHT 32
+#define DISPLAY_SCALE 10
+#define WINDOW_WIDTH  (DISPLAY_WIDTH * DISPLAY_SCALE)
+#define WINDOW_HEIGHT (DISPLAY_HEIGHT * DISPLAY_SCALE)
 
 static SDL_Window *window;
 static SDL_Renderer *renderer;
+static SDL_Color pixel_color = {
+    255, 255, 255, 255
+};
+static SDL_Color background_color = {
+    0, 0, 0, 255
+};
 
 int display_init(void) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -14,8 +27,8 @@ int display_init(void) {
         "CHIP-8 EMULATOR",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
-        640,
-        320,
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
         SDL_WINDOW_SHOWN
     );
 
@@ -37,20 +50,38 @@ int display_init(void) {
 
 void display_update(Chip8 *chip8) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(
+        renderer,
+        background_color.r,
+        background_color.g,
+        background_color.b,
+        background_color.a
+    );
     SDL_RenderClear(renderer);
 
-    for (int y = 0; y < 32; y++) {
-        for (int x = 0; x < 64; x++) {
 
-            if (chip8->display[y * 64 + x]) {
+    SDL_SetRenderDrawColor(
+        renderer,
+        pixel_color.r,
+        pixel_color.g,
+        pixel_color.b,
+        pixel_color.a
+    );
+
+
+
+
+    for (int y = 0; y < DISPLAY_HEIGHT; y++) {
+        for (int x = 0; x < DISPLAY_WIDTH; x++) {
+
+            if (chip8->display[y * DISPLAY_WIDTH + x]) {
                 SDL_Rect pixel = {
-                    x * 10,
-                    y * 10,
-                    10,
-                    10
+                    x * DISPLAY_SCALE,
+                    y * DISPLAY_SCALE,
+                    DISPLAY_SCALE,
+                    DISPLAY_SCALE
                 };
 
-                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
                 SDL_RenderFillRect(renderer, &pixel);
             }
         }
@@ -167,6 +198,22 @@ void display_handle_events(Chip8 *chip8, int *running) {
         }
     }
 }
+
+void display_set_color(uint8_t r, uint8_t g, uint8_t b) {
+    pixel_color.r = r;
+    pixel_color.g = g;
+    pixel_color.b = b;
+    pixel_color.a = 255;
+}
+
+void display_back_color(uint8_t r, uint8_t g, uint8_t b) {
+    background_color.r = r;
+    background_color.g = g;
+    background_color.b = b;
+    background_color.a = 255;
+}
+
+
 
 void display_cleanup(void) {
     SDL_DestroyRenderer(renderer);

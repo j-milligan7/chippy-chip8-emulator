@@ -85,13 +85,17 @@ void execute_instruction(Chip8 *chip8, Instruction instr) {
             op_4XNN(chip8, instr.X, instr.NN);
             break;
         case 0x5:
-            op_5XY0(chip8, instr.X, instr.Y);
+            if (instr.N == 0) {
+                op_5XY0(chip8, instr.X, instr.Y);
+            }
             break;
         case 0x6:
             op_6XNN(chip8, instr.X, instr.NN);
             break;
         case 0x9:
-            op_9XY0(chip8, instr.X, instr.Y);
+            if (instr.N == 0) {
+                op_9XY0(chip8, instr.X, instr.Y);
+            }
             break;
         case 0x7:
             op_7XNN(chip8, instr.X, instr.NN);
@@ -218,8 +222,9 @@ void chip8_loop(Chip8 *chip8, Debugger *dbg) {
                 debugger_print_state(chip8);
                 debugger_repl(dbg, chip8);
             }
+            uint16_t old_pc = chip8->PC;
             uint16_t opcode = fetch(chip8);
-           //printf("PC=%03X OPCODE=%04X DT=%d\n", old_pc, opcode, chip8->delay_timer);
+           printf("PC=%03X OPCODE=%04X DT=%d\n", old_pc, opcode, chip8->delay_timer);
             Instruction instr = decode_instruction(opcode);
             execute_instruction(chip8, instr);
         }

@@ -25,7 +25,8 @@ int main(int argc, char **argv){
     Debugger dbg;
     debugger_init(&dbg);
     dbg.step_mode = start_in_debug;
-
+    display_set_color(199, 125, 255);
+    display_back_color(18, 0, 31);
     chip8_loop(&chip8, &dbg);
     display_cleanup();
     return 0;

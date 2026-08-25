@@ -137,8 +137,10 @@ This sets the register VX to VX + VY. This instruction also affects the carry fl
 ```C
 void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
     uint16_t sum = chip8->V[x] + chip8->V[y];
-    chip8->V[0x0F] = sum > 255;
+    uint8_t flag = sum > 255;
     chip8->V[x] = sum & 0xFF;
+    chip8->V[0xF] = flag;
+}
 }
 ```
 
@@ -147,13 +149,15 @@ These instructions subtract one register from another. 8XY5 sets VX to VX-VY, wh
 
 ```C
 void op_8XY5(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[0xF] = (chip8->V[x] >= chip8->V[y]);
+    uint8_t flag = chip8->V[0xF] = (chip8->V[x] >= chip8->V[y]);
     chip8->V[x] = chip8->V[x] - chip8->V[y];
+    chip8->V[0xF] = flag;
 }
 
 void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
-    chip8->V[0xF] = (chip8->V[y] >= chip8->V[x]);
+    uint8_t flag = chip8->V[0xF] = (chip8->V[y] >= chip8->V[x]);
     chip8->V[x] = chip8->V[y] - chip8->V[x];
+    chip8->V[0xF] = flag;
 }
 ```
 
@@ -215,11 +219,9 @@ void op_DXYN(Chip8 *chip8, uint8_t x, uint8_t y, uint8_t n) {
             if (!(sprite_byte & (0x80 >> j))) {
                 continue;
             }
-            uint8_t pixel_x = x_coord + j;
-            uint8_t pixel_y = y_coord + i;
-            if (pixel_x >= 64 || pixel_y >= 32) {
-                continue;
-            }
+            uint8_t pixel_x = (x_coord + j) % 64;
+            uint8_t pixel_y = (y_coord + i) % 32;
+
             uint16_t index = pixel_y * 64 + pixel_x;
             if (chip8->display[index]) {
                 chip8->V[0xF] = 1;
