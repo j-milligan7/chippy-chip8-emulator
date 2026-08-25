@@ -7,15 +7,15 @@ A chip-8 emulator that is written in C that uses SDL2 for both graphics and keyb
 
 ## Features
 
--CHIP-8 CPU emulation
--4KB memory
--16 general purpose registers
--16 level stack
--delay and sound timers
--64x32 display
--SDL2 rendering
--keyboard input
--ROM loading
+- CHIP-8 CPU emulation
+- 4KB memory
+- 16 general purpose registers
+- 16 level stack
+- delay and sound timers
+- 64x32 display
+- SDL2 rendering
+- keyboard input
+- ROM loading
 
 ## Supported Instructions
 Implemented all of the original chip-8 instruction set.
