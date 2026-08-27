@@ -79,20 +79,20 @@ See [Architecture](docs/architecture.md)
 
 
 ## Testing
-See Future Improvements
+For testing i used [chip8-test-suite](https://github.com/Timendus/chip8-test-suite)
+i also implemeted a debug flag, to use:  
+```bash
+./chip8 roms/yourRom.ch8 --debug
+```
 
 ## Future Improvements (TODO)
-Docs 
+Finish docs 
 
-Debug Mode/Menu
-
-Testing
-
-fix display issues / rewrite display fully
-
+improve debug mode/menu
 
 ## References
 where i got some ROMs to test
+[chip8-test-suite](https://github.com/Timendus/chip8-test-suite)  
 
 [chip8Archive](https://johnearnest.github.io/chip8Archive/?sort=platform)
 
