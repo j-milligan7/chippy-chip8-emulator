@@ -16,6 +16,9 @@ void op_00EE(Chip8 *chip8) {
 }
 
 void op_2NNN(Chip8 *chip8, uint16_t nnn) {
+    if (chip8->SP >= 16) {
+        return;
+    }
     chip8->stack[chip8->SP] = chip8->PC;
     chip8->SP++;
     chip8->PC = nnn;

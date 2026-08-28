@@ -107,5 +107,5 @@ int main(void) {
     chip8_stack_init_test();
     chip8_font_init_test();
 
-    printf("Tests Done Successfuly");
+    printf("Chip8 Tests Done Successfuly");
 }
