@@ -1,4 +1,5 @@
 #include "../src/chip8.h"
+#include "test_instructions.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -106,6 +107,7 @@ int main(void) {
     chip8_display_init_test();
     chip8_stack_init_test();
     chip8_font_init_test();
+    instrTests();
 
-    printf("Chip8 Tests Done Successfuly");
+    printf("Chip8 Tests Passed\n");
 }

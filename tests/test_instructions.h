@@ -1,0 +1,41 @@
+#ifndef TEST_INSTRUCTIONS_H
+#define TEST_INSTRUCTIONS_H
+#include "../src/instructions.h"
+#include "../src/chip8.h"
+
+void op_00E0_tests(void);
+void op_00EE_tests(void);
+void op_2NNN_tests(void);
+void op_1NNN_tests(void);
+void op_3XNN_tests(void);
+void op_4XNN_tests(void);
+void op_5XY0_tests(void);
+void op_6XNN_tests(void);
+void op_7XNN_tests(void);
+void op_8XY0_tests(void);
+void op_8XY1_tests(void);
+void op_8XY2_tests(void);
+void op_8XY3_tests(void);
+void op_8XY4_tests(void);
+void op_8XY5_tests(void);
+void op_8XY6_tests(void);
+void op_8XY7_tests(void);
+void op_8XYE_tests(void);
+void op_9XY0_tests(void);
+void op_ANNN_tests(void);
+void op_BXNN_tests(void);
+void op_CXNN_tests(void);
+void op_DXYN_tests(void);
+void op_EX9E_tests(void);
+void op_EXA1_tests(void);
+void op_FX0A_tests(void);
+void op_FX15_tests(void);
+void op_FX18_tests(void);
+void op_FX1E_tests(void);
+void op_FX29_tests(void);
+void op_FX33_tests(void);
+void op_FX55_tests(void);
+void op_FX65_tests(void);
+void instrTests(void);
+
+#endif

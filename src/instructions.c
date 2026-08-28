@@ -87,13 +87,13 @@ void op_8XY4(Chip8 *chip8, uint8_t x, uint8_t y) {
 }
 
 void op_8XY5(Chip8 *chip8, uint8_t x, uint8_t y) {
-    uint8_t flag = chip8->V[0xF] = (chip8->V[x] >= chip8->V[y]);
+    uint8_t flag = (chip8->V[x] >= chip8->V[y]);
     chip8->V[x] = chip8->V[x] - chip8->V[y];
     chip8->V[0xF] = flag;
 }
 
 void op_8XY7(Chip8 *chip8, uint8_t x, uint8_t y) {
-    uint8_t flag = chip8->V[0xF] = (chip8->V[y] >= chip8->V[x]);
+    uint8_t flag = (chip8->V[y] >= chip8->V[x]);
     chip8->V[x] = chip8->V[y] - chip8->V[x];
     chip8->V[0xF] = flag;
 }

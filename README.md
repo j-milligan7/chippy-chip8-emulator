@@ -84,6 +84,8 @@ I also implemented a debug flag, to use:
 ```bash
 ./chip8 roms/yourRom.ch8 --debug
 ```
+I also have created some automated tests using assert see at [tests](/tests)
+
 
 ## Future Improvements (TODO)
 Finish docs 
