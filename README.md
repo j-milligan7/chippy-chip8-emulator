@@ -79,8 +79,8 @@ See [Architecture](docs/architecture.md)
 
 
 ## Testing
-For testing i used [chip8-test-suite](https://github.com/Timendus/chip8-test-suite)
-i also implemeted a debug flag, to use:  
+For testing I used the [chip8-test-suite](https://github.com/Timendus/chip8-test-suite)  
+I also implemented a debug flag, to use:  
 ```bash
 ./chip8 roms/yourRom.ch8 --debug
 ```

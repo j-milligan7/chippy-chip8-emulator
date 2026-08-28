@@ -1,7 +1,7 @@
 #Architecture
 
 ## Overview
-Chippy (named after a dog i know) is a chip-8 emulator that is written in C. This emulator is split into multiple components with the Chip8 struct representing the state of the virtual machine and seperate modules handling instruction execution and the display functionality.
+Chippy (named after a dog i know) is a chip-8 emulator that is written in C. This emulator is split into multiple components with the Chip8 struct representing the state of the virtual machine and separate modules handling instruction execution and the display functionality.
 
 The main components are:
 
@@ -61,7 +61,7 @@ uint16_t fetch(Chip8 *chip8) {
 ```
 
 ### 2.Decode
-The opcode that was fetched is then split into multiple components, i used an Instruction struct to keep them together and have them easily accessible.  
+The opcode that was fetched is then split into multiple components, I used an Instruction struct to keep them together and have them easily accessible.  
 ```C
 Instruction decode_instruction(uint16_t opcode) {
     Instruction instr;
@@ -76,11 +76,9 @@ Instruction decode_instruction(uint16_t opcode) {
 ```
 
 ### 3.Execute
-The decoded instruction is then passed into the execute_instruction function, which is a huge switch case statement. this then calls a function defined in instructions.c for the appropriate instruction. The instruction affects the Chip8 state directly.
+The decoded instruction is then passed into the execute_instruction function, which is a huge switch statement. This then calls a function defined in instructions.c for the appropriate instruction. The instruction affects the Chip8 state directly.
 
 ### Instruction Dispatch
 The Chip8 instruction set is implemented in instructions.c
 
-the instructions "group" is determined by the first nibble. Some instruction groups will need further decoding of the lower nibbles.
-
-#FINISH REST LATER
+The instruction "group" is determined by the first nibble. Some instruction groups will need further decoding of the lower nibbles.

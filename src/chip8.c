@@ -6,7 +6,6 @@
 #include "chip8.h"
 #include "display.h"
 #include "instructions.h"
-#include "instructions.h"
 #include <time.h>
 #include "debug.h"
 
@@ -58,7 +57,6 @@ Instruction decode_instruction(uint16_t opcode) {
 }
 
 void execute_instruction(Chip8 *chip8, Instruction instr) {
-   // printf("Group=%X X=%X Y=%X N=%X NN=%X NNN=%x\n", instr.group, instr.X, instr.Y, instr.N, instr.NN, instr.NNN);
     switch (instr.group) {
         case 0x0 :
             switch(instr.NNN) {
@@ -222,9 +220,7 @@ void chip8_loop(Chip8 *chip8, Debugger *dbg) {
                 debugger_print_state(chip8);
                 debugger_repl(dbg, chip8);
             }
-            uint16_t old_pc = chip8->PC;
             uint16_t opcode = fetch(chip8);
-           printf("PC=%03X OPCODE=%04X DT=%d\n", old_pc, opcode, chip8->delay_timer);
             Instruction instr = decode_instruction(opcode);
             execute_instruction(chip8, instr);
         }

@@ -11,7 +11,7 @@ void op_00E0(Chip8 *chip8) {
 ```
 
 ## 00EE
-This is a return instruction, it pops the last memory location in the stack and assings the program counter to it.
+This is a return instruction, it pops the last memory location in the stack and assigns the program counter to it.
 
 ```C
 void op_00EE(Chip8 *chip8) {
@@ -30,7 +30,7 @@ void op_1NNN(Chip8 *chip8, uint16_t nnn) {
 ```
 
 ## 2NNN
-This is a call instruction, pushes the program counter to the stack, and sets the program counuter to NNN.
+This is a call instruction, pushes the program counter to the stack, and sets the program counter to NNN.
 
 ```C
 void op_2NNN(Chip8 *chip8, uint16_t nnn) {
@@ -41,7 +41,7 @@ void op_2NNN(Chip8 *chip8, uint16_t nnn) {
 ```
 
 ## 3XNN & 4XNN
-When these instructions are called, they checks whether register VX == NN, 3XNN skips one instruction if they are equal, 4XNN skips if they are not.
+When these instructions are called, they check whether register VX == NN, 3XNN skips one instruction if they are equal, 4XNN skips if they are not.
 
 ```C
 void op_3XNN(Chip8 *chip8, uint8_t x, uint8_t nn) {
