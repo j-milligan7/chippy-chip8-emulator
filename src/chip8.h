@@ -14,15 +14,15 @@ typedef struct Chip8 Chip8;
 
  struct Chip8 {
     uint8_t memory[MAX_MEMORY_SIZE]; //RAM
-    uint8_t V[MAX_V_STACK_KEYPAD_SIZE]; // array of all general purpose registers [V0 -> VF]
+    uint8_t V[16]; // array of all general purpose registers [V0 -> VF]
     uint16_t I; // INDEX REGISTER
     uint16_t PC; // PROGRAM COUNTER
-    uint16_t stack[MAX_V_STACK_KEYPAD_SIZE];
+    uint16_t stack[16;
     uint8_t SP; // STACK POINTER
     uint8_t delay_timer;
     uint8_t sound_timer;
     uint8_t display[MAX_DISPLAY_SIZE]; //DISPLAY
-    bool keypad[MAX_V_STACK_KEYPAD_SIZE];
+    bool keypad[16];
 };
 
 void chip8_init(Chip8 *chip8);
